@@ -2,6 +2,8 @@ from flask import Flask, request, render_template, jsonify
 
 app = Flask(__name__)
 
+
+#  Method to convert CSV Data into JSON
 def convertCSVtoJson(csvContent):
 
     # Initialize the output object
@@ -52,6 +54,7 @@ def convertCSVtoJson(csvContent):
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
+        # Reading the file
         csv_file = request.files['csvFile']
         if csv_file.filename != '':
             try:
