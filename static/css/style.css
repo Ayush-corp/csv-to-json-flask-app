@@ -29,3 +29,11 @@ span{
     padding: 7px 13px;
     cursor: pointer;
 }
+.project-name{
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0px;
+}
+.space-name{
+    color: #666667;
+}

@@ -20,8 +20,8 @@
         <form id="upload-form" class="mb-3" method="POST" enctype="multipart/form-data">
             <input type="file" id="csv-file" name="csvFile" accept=".csv" required class="form-control mb-2 content-center">
             <button type="submit" id="convert-button" class="btn btn-success">Convert</button>
+            <button type="reset" id="reset-button" class="btn btn-secondary ms-2">Clear JSON</button>
         </form>
-        <button id="reset-button" class="btn btn-secondary ms-2 mb-2">Clear JSON</button>
     </div>
 
     {% if error %}
@@ -31,9 +31,12 @@
     {% if json_output %}
     <div class="container">
         <div class="content-center">
+            <p class="project-name">{{json_output['Project Name']}}</p>
+            <p class="space name">{{json_output['Space Name']}}</p>
             <div id="json-output"></div>
         </div>
     </div>
+    
     {% endif %}
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
