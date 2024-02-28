@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, render_template, jsonify
 
 app = Flask(__name__)
 
@@ -49,18 +49,22 @@ def convertCSVtoJson(csvContent):
                     output['parts'][currentKey]["Standards"][-1]["notes"].append(row[3])
     return output
 
-@app.route('/convert', methods=['POST'])
-def convert_csv_to_json():
-    csv_file = request.files.get('csvFile')
-    if csv_file:
-        try:
-            csv_content = csv_file.read()
-            json_output = convertCSVtoJson(csv_content)
-            return jsonify(json_output)
-        except Exception as e:
-            return jsonify({"error": str(e)}), 400
-    else:
-        return jsonify({"error": "CSV file is missing"}), 400
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        csv_file = request.files['csvFile']
+        if csv_file.filename != '':
+            try:
+                csv_content = csv_file.read()
+                json_output = convertCSVtoJson(csv_content)
+                return render_template('index.html', json_output=json_output)
+            except Exception as e:
+                error_message = f"Error: {str(e)}"
+                return render_template('index.html', error=error_message)
+        else:
+            error_message = "No file selected"
+            return render_template('index.html', error=error_message)
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
